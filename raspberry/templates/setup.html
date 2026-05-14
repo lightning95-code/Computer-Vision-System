@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Setup</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #0f1115;
+            color: white;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4da3ff;
+        }
+
+        input, button {
+            width: 100%;
+            height: 44px;
+            margin-top: 12px;
+            border-radius: 8px;
+            border: none;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        input {
+            padding: 0 12px;
+            background: #1a1d25;
+            color: white;
+            outline: none;
+        }
+
+        button {
+            background: #4da3ff;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        #status {
+            margin-top: 10px;
+            text-align: center;
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Початкове налаштування</h1>
+
+    <input id="ip" placeholder="PC IP (192.168.x.x)">
+    <input id="port" placeholder="PORT (5000)">
+
+    <button onclick="save()">Зберегти</button>
+
+    <div id="status"></div>
+
+</div>
+
+<script>
+
+function save(){
+
+    let ip = document.getElementById("ip").value.trim();
+    let port = document.getElementById("port").value.trim();
+
+    if(!ip || !port){
+        document.getElementById("status").innerText = "Заповніть IP і PORT";
+        return;
+    }
+
+    let pc_server = `http://${ip}:${port}`;
+
+    fetch('/save_config', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            pc_server: pc_server
+        })
+    })
+    .then(r => r.json())
+    .then(d => {
+
+        document.getElementById("status").innerText = "Збережено";
+
+        setTimeout(() => {
+            window.location.href = "/main";
+        }, 500);
+
+    })
+    .catch(err => {
+        document.getElementById("status").innerText = "Помилка збереження";
+        console.log(err);
+    });
+
+}
+
+</script>
+
+</body>
+</html>

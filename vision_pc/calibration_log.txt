@@ -1,0 +1,47 @@
+Знайдено зображень: 29
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_110355.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_110731.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_110842.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_111340.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_111428.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_111622.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_111710.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_111833.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_112037.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_112136.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_112221.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_112447.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_112807.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_112909.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_112950.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_113103.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_113315.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_113422.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_113730.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_113841.png -> знайдено: False
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_113935.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_114005.png -> знайдено: False
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_114241.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_114520.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_114731.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_115016.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_115115.png -> знайдено: True
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_115406.png -> знайдено: False
+d:\my diploma\Computer Vision System\vision_pc\calibration_images\board_ref_20260422_115500.png -> знайдено: True
+
+Успішно оброблено: 26
+Неуспішно оброблено: 3
+
+Матриця камери:
+[[2.50961382e+03 0.00000000e+00 1.33889710e+03]
+ [0.00000000e+00 2.51423313e+03 9.63860045e+02]
+ [0.00000000e+00 0.00000000e+00 1.00000000e+00]]
+Коефіцієнти дисторсії:
+[[ 2.19355327e-01  3.64656498e-01  5.52784578e-03  2.06512669e-03
+  -4.66504120e+00]]
+RMS похибка: 2.4177234930016853
+
+Похибка репроєкції: 0.29213372882090105
+
+Збережено calibration.npz
+Збережено reprojection_error.npy

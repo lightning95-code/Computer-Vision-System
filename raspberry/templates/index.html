@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Система комп’ютерного зору</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f1115;
+            color: white;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #4da3ff;
+            font-size: 32px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: #1a1d25;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.25);
+        }
+
+        .title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #d7e8ff;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 12px;
+            border: 2px solid #2a2f3a;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 12px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.01);
+            opacity: 0.92;
+        }
+
+        .b1 { background: #2ecc71; color: black; }
+        .b2 { background: #4da3ff; color: black; }
+        .b3 { background: #e74c3c; color: black; }
+        .b4 { background: #f39c12; color: black; }
+
+        .upload-box {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #2e3440;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            background: #11151c;
+            color: white;
+            border: 1px solid #2e3440;
+            box-sizing: border-box;
+        }
+
+        #status {
+            margin-top: 18px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #11151c;
+            border: 1px solid #2e3440;
+            min-height: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Система комп’ютерного зору</h1>
+
+    <div class="grid">
+
+        <div class="card">
+
+            <div class="title">Відеопотік з камери</div>
+
+            <img src="/video_feed">
+
+            <button class="b1" onclick="capture()">
+                Захопити кадр
+            </button>
+
+            <button class="b2" onclick="processImage()">
+                Розпочати обробку кадру
+            </button>
+
+            <button class="b3" onclick="sendFanuc()">
+                Передати дані до FANUC
+            </button>
+
+            <div class="upload-box">
+
+                <div class="title">Завантаження зображення з ПК</div>
+
+                <input type="file" id="fileInput">
+
+                <button class="b4" onclick="upload()">
+                    Завантажити та обробити
+                </button>
+
+            </div>
+
+            <div id="status">
+                Система готова до роботи
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="title">Оригінальний кадр</div>
+            <img id="original" onclick="openImage(this.src)" style="cursor:zoom-in;">
+
+            <div class="title">Результат обробки</div>
+            <img id="result" onclick="openImage(this.src)" style="cursor:zoom-in;">
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- FULLSCREEN MODAL -->
+<div id="modal" onclick="closeModal()" style="
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.92);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    overflow:auto;
+">
+    <img id="modalImg" style="
+        max-width:90vw;
+        max-height:90vh;
+        width:auto;
+        height:auto;
+        object-fit:contain;
+        border-radius:10px;
+        box-shadow:0 0 25px rgba(0,0,0,0.8);
+        display:block;
+    ">
+</div>
+
+<script>
+
+function capture(){
+
+    fetch('/capture')
+    .then(r => r.json())
+    .then(d => {
+
+        document.getElementById("status").innerText =
+            "Кадр успішно збережено";
+
+        document.getElementById("original").src =
+            d.file + "?t=" + Date.now();
+    });
+}
+
+function processImage(){
+
+    fetch('/process')
+    .then(r => r.json())
+    .then(d => {
+
+        document.getElementById("status").innerText =
+            "Виявлено об'єктів: " + d.count;
+
+        document.getElementById("result").src =
+            d.result + "?t=" + Date.now();
+    });
+}
+
+function sendFanuc(){
+
+    fetch('/send_fanuc', {
+        method: 'POST'
+    })
+    .then(r => r.json())
+    .then(d => {
+
+        document.getElementById("status").innerText =
+            "Дані передано до FANUC";
+    });
+}
+
+function upload(){
+
+    let file = document.getElementById("fileInput").files[0];
+
+    if(!file){
+
+        document.getElementById("status").innerText =
+            "Спочатку виберіть файл";
+
+        return;
+    }
+
+    let fd = new FormData();
+    fd.append("image", file);
+
+    fetch('/upload', {
+        method: "POST",
+        body: fd
+    })
+    .then(r => r.json())
+    .then(d => {
+
+        if(!d.result){
+            document.getElementById("status").innerText =
+                "Помилка обробки";
+            return;
+        }
+
+        document.getElementById("result").src =
+            d.result + "?t=" + Date.now();
+
+        document.getElementById("original").src =
+            URL.createObjectURL(file);
+    });
+}
+
+function openImage(src){
+    document.getElementById("modal").style.display = "flex";
+    document.getElementById("modalImg").src = src;
+}
+
+function closeModal(){
+    document.getElementById("modal").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
