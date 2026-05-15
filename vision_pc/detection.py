@@ -222,7 +222,7 @@ def run_detection(image_path):
         mean_val = np.mean(pixels)
 
         # COLOR
-        letter = "B" if mean_val > 140 else "W"
+        letter = "W" if mean_val > 140 else "B"
 
         print(
             f"OBJECT {piece_id}:",
