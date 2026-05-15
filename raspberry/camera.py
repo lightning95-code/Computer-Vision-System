@@ -14,11 +14,15 @@ class Camera:
                 from picamera2 import Picamera2
 
                 self.picam2 = Picamera2()
+
                 self.picam2.configure(
                     self.picam2.create_preview_configuration(
-                        main={"size": (1280, 720)}
+                        main={
+                            "size": (2592, 1944)
+                        }
                     )
                 )
+
                 self.picam2.start()
 
             except Exception as e:
@@ -33,7 +37,9 @@ class Camera:
             ret, frame = self.cap.read()
             return frame if ret else None
 
-        return self.picam2.capture_array()
+        frame = self.picam2.capture_array()
+
+        return cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
 
     def capture(self, path):
